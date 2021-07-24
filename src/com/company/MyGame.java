@@ -7,25 +7,25 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 public class MyGame extends JFrame implements ActionListener {
-    // declaring variable
+     
     JLabel heading , clockLabel;
 
-    // declaring JPanel , it is like container in html
+    
     JPanel mainPanel ;
 
-    // declaring a font class
+    
     Font font = new Font("", Font.BOLD,25);
 
-    // declaring button class
-    JButton []btns = new JButton[9];  // creating buttons array the size of these array is 9
+    
+    JButton []btns = new JButton[9];   
     Boolean gameOVer = false ;
 
-    int gameChances[] = {2,2,2,2,2,2,2,2,2}; // we set all index position value is 2 , 2 is represent the neither press 1 and nor 2
-    int activePlayer = 0 ;  // we are set the default value of current player is 0 , 0 it means when user press on any button it show 0
+    int gameChances[] = {2,2,2,2,2,2,2,2,2};  
+    int activePlayer = 0 ;   
 
-    // getting of array of array , this array are the chances to win user row by row  or row by colomn
+    
     int wps[][] = { {0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6} };
-    int winner = 2 ; // set the winner value 2 by default , because at starting of game no anyone win
+    int winner = 2 ; 
     int failure = 2 ;
     MyGame(){
         System.out.println("Hello from MyGame constructor");
@@ -57,9 +57,9 @@ public class MyGame extends JFrame implements ActionListener {
         clockLabel.setFont(font);
         clockLabel.setForeground(Color.white);
         clockLabel.setBackground(Color.blue);
-        this.add(clockLabel, BorderLayout.SOUTH);   // this code set the clock in bottom of main table
+        this.add(clockLabel, BorderLayout.SOUTH);   
 
-        // creating a updated clock by using Thread
+        //  updated clock by using Thread
         Thread thread = new Thread(){
           public void run(){
               try {
@@ -81,10 +81,10 @@ public class MyGame extends JFrame implements ActionListener {
 
         for(int i=1 ; i<=9 ; i++){
             JButton btn = new JButton();
-//            btn.setIcon(new ImageIcon("src/images/zero.png"));
+        
             btn.setFont(font);
-            mainPanel.add(btn);   // add all btn in mainPanel
-            btns[i-1] = btn ;   // this code push index value of btn into 0 index, by default btn starting at 1 index position
+            mainPanel.add(btn);    
+            btns[i-1] = btn ;    
             btn.addActionListener(this);
             btn.setName(String.valueOf(i-1));
         }
@@ -92,20 +92,19 @@ public class MyGame extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {  // e are the event listener
+    public void actionPerformed(ActionEvent e) {  
         JButton currrentBtn =(JButton)e.getSource() ;
         String btnName = currrentBtn.getName();
         int name = Integer.parseInt(btnName);
-//        System.out.println("in the form of string :"+btnName);
-//        System.out.println("in the form of int :"+name);
+ 
 
         if (gameOVer){
             JOptionPane.showMessageDialog(this, "Game already OVer");
             return ;
         }
 
-        // checking what button user press and set the button depends upon the user what they press
-        if (gameChances[name] == 2){  // equal 2 it represent nothing value to press of any button
+       
+        if (gameChances[name] == 2){  
             if(activePlayer == 0){
                 currrentBtn.setIcon(new ImageIcon("src/images/zero.png"));
                 gameChances[name] = activePlayer ;
@@ -124,15 +123,15 @@ public class MyGame extends JFrame implements ActionListener {
                     gameOVer = true ;
                     JOptionPane.showMessageDialog(this ,"Player "+ winner +" has won the Game");
                     int i = JOptionPane.showConfirmDialog(this,"Do want to Play more ");
-//                    System.out.println(i);
+ 
                     if (i == 0){
                         this.setVisible(false);
-                        new MyGame();  // creating new instance of MyGame constructor and lounch new window screen
+                        new MyGame();  
                     }
                     else if(i == 1){
                         System.exit(404);
                     }
-                    break ;  //because after winner of player close or stop the loop for checking match the item
+                    break ;  
                 }
             }
 
